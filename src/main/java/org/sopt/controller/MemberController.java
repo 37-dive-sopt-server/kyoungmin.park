@@ -1,26 +1,20 @@
 package org.sopt.controller;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
+import org.sopt.domain.Gender;
 import org.sopt.domain.Member;
-import org.sopt.service.MemberService;
-import org.sopt.service.MemberServiceImpl;
 
-public class MemberController {
+public interface MemberController {
+	void initData();
 
-	private final MemberService memberService = new MemberServiceImpl();
+	Long createMember(String name, String email, LocalDate birthday, Gender gender);
 
-	public Long createMember(String name) {
+	Optional<Member> findMemberById(Long id);
 
-		return memberService.join(name);
-	}
+	List<Member> getAllMembers();
 
-	public Optional<Member> findMemberById(Long id) {
-		return memberService.findOne(id);
-	}
-
-	public List<Member> getAllMembers() {
-		return memberService.findAllMembers();
-	}
+	void deleteMemberById(Long id);
 }
