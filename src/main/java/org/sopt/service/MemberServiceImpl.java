@@ -11,12 +11,15 @@ import org.sopt.exception.EmailAlreadyExistException;
 import org.sopt.exception.InvalidAgeException;
 import org.sopt.exception.message.ExceptionMessage;
 import org.sopt.repository.MemberRepository;
-import org.sopt.repository.MemberRepositoryFacade;
 import org.sopt.service.util.IdGenerator;
 
 public class MemberServiceImpl implements MemberService {
 
-	private final MemberRepository memberRepository = new MemberRepositoryFacade();
+	private final MemberRepository memberRepository;
+
+	public MemberServiceImpl(MemberRepository memberRepository) {
+		this.memberRepository = memberRepository;
+	}
 
 	public void initData() {
 		memberRepository.init();

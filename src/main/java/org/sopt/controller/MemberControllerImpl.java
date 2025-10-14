@@ -7,11 +7,14 @@ import java.util.Optional;
 import org.sopt.domain.Gender;
 import org.sopt.domain.Member;
 import org.sopt.service.MemberService;
-import org.sopt.service.MemberServiceImpl;
 
 public class MemberControllerImpl implements MemberController {
 
-	private final MemberService memberService = new MemberServiceImpl();
+	private final MemberService memberService;
+
+	public MemberControllerImpl(MemberService memberService) {
+		this.memberService = memberService;
+	}
 
 	public void initData() {
 		memberService.initData();
