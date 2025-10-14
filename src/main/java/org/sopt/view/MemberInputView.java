@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.util.Scanner;
 
 import org.sopt.domain.Gender;
-import org.sopt.util.InputValidator;
+import org.sopt.view.util.InputValidator;
 
 public class MemberInputView {
 	private final Scanner scanner = new Scanner(System.in);
@@ -15,62 +15,31 @@ public class MemberInputView {
 	}
 
 	public String inputName() {
-		while (true) {
-			System.out.print("등록할 회원 이름을 입력하세요: ");
+		System.out.print("등록할 회원 이름을 입력하세요: ");
 
-			try {
-				return InputValidator.validateName(scanner.nextLine().trim());
-			} catch (IllegalArgumentException e) {
-				System.out.println(e.getMessage());
-			}
-		}
+		return InputValidator.validateName(scanner.nextLine().trim());
 	}
 
 	public String inputEmail() {
-		while (true) {
-			System.out.print("등록할 회원 이메일을 입력하세요: ");
+		System.out.print("등록할 회원 이메일을 입력하세요: ");
 
-			try {
-				return InputValidator.validateEmail(scanner.nextLine().trim());
-			} catch (IllegalArgumentException e) {
-				System.out.println(e.getMessage());
-			}
-		}
+		return InputValidator.validateEmail(scanner.nextLine().trim());
 	}
 
 	public LocalDate inputBirthday() {
-		while (true) {
-			System.out.print("생일을 입력하세요(YYYY-MM-DD): ");
+		System.out.print("생일을 입력하세요(YYYY-MM-DD): ");
 
-			try {
-				return InputValidator.validateBirthday(scanner.nextLine().trim());
-			} catch (IllegalArgumentException e) {
-				System.out.println(e.getMessage());
-			}
-		}
+		return InputValidator.validateBirthday(scanner.nextLine().trim());
 	}
 
 	public Gender inputGender() {
-		while (true) {
-			System.out.print("성별을 입력하세요(남성 or 여성): ");
-
-			try {
-				return InputValidator.validateGender(scanner.nextLine().trim());
-			} catch (IllegalArgumentException e) {
-				System.out.println(e.getMessage());
-			}
-		}
+		System.out.print("성별을 입력하세요(남성 or 여성): ");
+		return InputValidator.validateGender(scanner.nextLine().trim());
 	}
 
 	public Long inputId() {
-		while (true) {
-			System.out.print("조회할 회원 ID를 입력하세요: ");
+		System.out.print("회원 ID를 입력하세요: ");
 
-			try {
-				return InputValidator.validateId(scanner.nextLine().trim());
-			} catch (IllegalArgumentException e) {
-				System.out.println(e.getMessage());
-			}
-		}
+		return InputValidator.validateId(scanner.nextLine().trim());
 	}
 }
