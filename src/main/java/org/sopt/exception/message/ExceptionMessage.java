@@ -8,7 +8,9 @@ public enum ExceptionMessage {
 	INVALID_BIRTHDAY("⚠️ 생일 형식이 올바르지 않습니다. YYYY-MM-DD로 입력해주세요."),
 	INVALID_GENDER("⚠️ 성별은 '남성' 또는 '여성'만 입력 가능합니다."),
 	EMAIL_BLANKED("⚠️ 이메일을 입력해주세요."),
-	INVALID_EMAIL("⚠️ 이메일 형식이 올바르지 않습니다.");
+	INVALID_EMAIL("⚠️ 이메일 형식이 올바르지 않습니다."),
+	FILE_NOT_READABLE("⚠️ 백업 파일을 읽을 수 없습니다."),
+	FILE_NOT_WRITABLE("⚠️ 백업 파일을 쓸 수 없습니다.");
 
 	private final String message;
 
