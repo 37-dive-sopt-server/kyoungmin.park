@@ -4,29 +4,33 @@ import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 
 import org.sopt.domain.Gender;
+import org.sopt.exception.InvalidInputException;
+import org.sopt.exception.message.ExceptionMessage;
 
 public class InputValidator {
+	private static final String EMAIL_REGEX = "^[\\w._%+-]+@[\\w.-]+\\.[a-zA-Z]{2,6}$";
+
 	public static long validateId(String idStr) {
 		try {
 			return Long.parseLong(idStr);
 		} catch (NumberFormatException e) {
-			throw new IllegalArgumentException("❌ 유효하지 않은 ID 형식입니다. 숫자를 입력해주세요.");
+			throw new InvalidInputException(ExceptionMessage.INVALID_ID.getMessage());
 		}
 	}
 
 	public static String validateName(String name) {
 		if (name == null || name.isBlank()) {
-			throw new IllegalArgumentException("⚠️ 이름을 입력해주세요.");
+			throw new InvalidInputException(ExceptionMessage.NAME_BLANKED.getMessage());
 		}
 		return name;
 	}
 
 	public static String validateEmail(String email) {
 		if (email == null || email.isBlank()) {
-			throw new IllegalArgumentException("⚠️ 이메일을 입력해주세요.");
+			throw new InvalidInputException(ExceptionMessage.EMAIL_BLANKED.getMessage());
 		}
-		if (!email.matches("^[\\w._%+-]+@[\\w.-]+\\.[a-zA-Z]{2,6}$")) {
-			throw new IllegalArgumentException("⚠️ 이메일 형식이 올바르지 않습니다.");
+		if (!email.matches(EMAIL_REGEX)) {
+			throw new InvalidInputException(ExceptionMessage.INVALID_EMAIL.getMessage());
 		}
 		return email;
 	}
@@ -35,7 +39,7 @@ public class InputValidator {
 		try {
 			return LocalDate.parse(birthStr);
 		} catch (DateTimeParseException e) {
-			throw new IllegalArgumentException("⚠️ 생일 형식이 올바르지 않습니다. YYYY-MM-DD로 입력해주세요.");
+			throw new InvalidInputException(ExceptionMessage.INVALID_BIRTHDAY.getMessage());
 		}
 	}
 
@@ -43,7 +47,7 @@ public class InputValidator {
 		try {
 			return Gender.of(genderStr);
 		} catch (NullPointerException e) {
-			throw new IllegalArgumentException("⚠️ 성별은 '남성' 또는 '여성'만 입력 가능합니다.");
+			throw new InvalidInputException(ExceptionMessage.INVALID_GENDER.getMessage());
 		}
 	}
 }
