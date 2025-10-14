@@ -1,4 +1,4 @@
-package org.sopt.util;
+package org.sopt.view.util;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
