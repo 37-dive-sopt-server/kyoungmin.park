@@ -25,7 +25,7 @@ public class MemberRepositoryFacade implements MemberRepository {
 	public void init() {
 		Map<Long, Member> initialData = fileMemberRepository.load();
 		memoryMemberRepository.init(initialData);
-		IdGenerator.init(initialData.keySet().stream().max(Long::compareTo).orElse(1L));
+		IdGenerator.init(initialData.keySet().stream().max(Long::compareTo).orElse(0L));
 	}
 
 	public Member save(Member member) {
