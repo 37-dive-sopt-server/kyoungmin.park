@@ -9,24 +9,33 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+@Component
 public class FileIOManager {
-	private static final Path FILE_PATH = Paths.get("src/main/java/org/sopt/assets/member.txt");
+	private final Path filePath;
+	// = Paths.get("src/main/java/org/sopt/global/assets/member.txt");
 
-	public static ObjectOutputStream openObjectWriter() throws IOException {
-		if (!Files.exists(FILE_PATH)) {
-			Files.createFile(FILE_PATH);
+	public FileIOManager(@Value("${file.path}") String path) {
+		this.filePath = Paths.get(path);
+	}
+
+	public ObjectOutputStream openObjectWriter() throws IOException {
+		if (!Files.exists(filePath)) {
+			Files.createFile(filePath);
 		}
-		return new ObjectOutputStream(new BufferedOutputStream(Files.newOutputStream(FILE_PATH)));
+		return new ObjectOutputStream(new BufferedOutputStream(Files.newOutputStream(filePath)));
 	}
 
-	public static boolean isFileEmpty() throws IOException {
-		return !Files.exists(FILE_PATH) || Files.size(FILE_PATH) == 0;
+	public boolean isFileEmpty() throws IOException {
+		return !Files.exists(filePath) || Files.size(filePath) == 0;
 	}
 
-	public static ObjectInputStream openObjectReader() throws IOException {
+	public ObjectInputStream openObjectReader() throws IOException {
 		if (isFileEmpty()) {
 			return null;
 		}
-		return new ObjectInputStream(new BufferedInputStream(Files.newInputStream(FILE_PATH)));
+		return new ObjectInputStream(new BufferedInputStream(Files.newInputStream(filePath)));
 	}
 }
