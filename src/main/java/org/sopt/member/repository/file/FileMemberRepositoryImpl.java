@@ -15,9 +15,14 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class FileMemberRepositoryImpl implements FileMemberRepository {
+	private final FileIOManager fileIOManager;
+
+	public FileMemberRepositoryImpl(FileIOManager fileIOManager) {
+		this.fileIOManager = fileIOManager;
+	}
 
 	private List<Member> readMembers() {
-		try (ObjectInputStream ois = FileIOManager.openObjectReader()) {
+		try (ObjectInputStream ois = fileIOManager.openObjectReader()) {
 			if (ois == null) {
 				return new ArrayList<>();
 			}
@@ -28,7 +33,7 @@ public class FileMemberRepositoryImpl implements FileMemberRepository {
 	}
 
 	private void writeMembers(List<Member> members) {
-		try (ObjectOutputStream oos = FileIOManager.openObjectWriter()) {
+		try (ObjectOutputStream oos = fileIOManager.openObjectWriter()) {
 			oos.writeObject(members);
 		} catch (IOException e) {
 			throw new FileIOException();
