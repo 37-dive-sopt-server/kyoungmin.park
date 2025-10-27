@@ -2,20 +2,21 @@ package org.sopt.member.domain;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.Period;
 
 public class Member implements Serializable {
 
 	private Long id;
 	private String name;
 	private String email;
-	private LocalDate birthdate;
+	private LocalDate birthday;
 	private Gender gender;
 
-	public Member(Long id, String name, String email, LocalDate birthdate, Gender gender) {
+	public Member(Long id, String name, String email, LocalDate birthday, Gender gender) {
 		this.id = id;
 		this.name = name;
 		this.email = email;
-		this.birthdate = birthdate;
+		this.birthday = birthday;
 		this.gender = gender;
 	}
 
@@ -31,11 +32,15 @@ public class Member implements Serializable {
 		return email;
 	}
 
-	public LocalDate getBirthdate() {
-		return birthdate;
+	public LocalDate getBirthday() {
+		return birthday;
 	}
 
 	public Gender getGender() {
 		return gender;
+	}
+
+	public int getAge(LocalDate now){
+		return Period.between(birthday, now).getYears();
 	}
 }
