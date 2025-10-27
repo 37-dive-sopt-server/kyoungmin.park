@@ -1,20 +1,19 @@
 package org.sopt.member.controller;
 
-import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
-import org.sopt.member.domain.Gender;
-import org.sopt.member.domain.Member;
+import org.sopt.global.api.response.ApiResponse;
+import org.sopt.member.dto.request.MemberCreateDto;
+import org.sopt.member.dto.response.MemberInfoDto;
+import org.springframework.http.ResponseEntity;
 
 public interface MemberController {
-	void initData();
 
-	Long createMember(String name, String email, LocalDate birthday, Gender gender);
+	ResponseEntity<ApiResponse<Void>> createMember(MemberCreateDto memberCreateDto);
 
-	Optional<Member> findMemberById(Long id);
+	ResponseEntity<ApiResponse<MemberInfoDto>> findMemberById(long id);
 
-	List<Member> getAllMembers();
+	ResponseEntity<ApiResponse<List<MemberInfoDto>>> getAllMembers();
 
-	void deleteMemberById(Long id);
+	ResponseEntity<ApiResponse<Void>> deleteMemberById(long id);
 }

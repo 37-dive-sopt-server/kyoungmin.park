@@ -1,15 +1,16 @@
 package org.sopt.member.service;
 
 import java.time.LocalDate;
-import java.time.Period;
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
-import org.sopt.member.domain.Gender;
+import org.sopt.global.exception.external.NotFoundException;
 import org.sopt.member.domain.Member;
-import org.sopt.global.exception.EmailAlreadyExistException;
-import org.sopt.global.exception.InvalidAgeException;
-import org.sopt.global.exception.message.ExceptionMessage;
+import org.sopt.global.exception.business.EmailAlreadyExistException;
+import org.sopt.global.exception.business.InvalidAgeException;
+import org.sopt.global.api.code.ErrorCode;
+import org.sopt.member.dto.request.MemberCreateDto;
+import org.sopt.member.dto.response.MemberInfoDto;
 import org.sopt.member.repository.MemberRepository;
 import org.sopt.member.service.util.IdGenerator;
 import org.springframework.stereotype.Service;
@@ -23,36 +24,33 @@ public class MemberServiceImpl implements MemberService {
 		this.memberRepository = memberRepository;
 	}
 
-	public void initData() {
-		memberRepository.init();
-	}
+	public void join(final MemberCreateDto memberCreateDto) {
+		Member member = memberCreateDto.toEntity(IdGenerator.generate());
 
-	public Long join(String name, String email, LocalDate birthday, Gender gender) {
-		if (calculateAge(birthday) < 20) {
-			throw new InvalidAgeException(ExceptionMessage.AGE_UNDER_20.getMessage());
+		if (member.getAge(LocalDate.now()) < 20) {
+			throw new InvalidAgeException();
 		}
-		if (memberRepository.existsByEmail(email)) {
-			throw new EmailAlreadyExistException(ExceptionMessage.ALREADY_EXIST_EMAIL.getMessage());
+		if (memberRepository.existsByEmail(member.getEmail())) {
+			throw new EmailAlreadyExistException();
 		}
 
-		Member member = new Member(IdGenerator.generate(), name, email, birthday, gender);
-
-		return memberRepository.save(member).getId();
+		memberRepository.save(member);
 	}
 
-	public Optional<Member> findOne(Long memberId) {
-		return memberRepository.findById(memberId);
+	public MemberInfoDto findOne(final long memberId) {
+		Member member =  memberRepository.findById(memberId)
+				.orElseThrow(() -> new NotFoundException(ErrorCode.MEMBER_NOTFOUND));
+
+		return MemberInfoDto.from(member);
 	}
 
-	public List<Member> findAllMembers() {
-		return memberRepository.findAll();
+	public List<MemberInfoDto> findAllMembers() {
+		return memberRepository.findAll().stream()
+				.map(MemberInfoDto::from)
+				.collect(Collectors.toList());
 	}
 
-	public void deleteMemberById(Long id) {
+	public void deleteMemberById(final long id) {
 		memberRepository.deleteById(id);
-	}
-
-	private int calculateAge(LocalDate birthday) {
-		return Period.between(birthday, LocalDate.now()).getYears();
 	}
 }

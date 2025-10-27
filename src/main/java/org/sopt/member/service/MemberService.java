@@ -1,20 +1,17 @@
 package org.sopt.member.service;
 
-import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
-import org.sopt.member.domain.Gender;
-import org.sopt.member.domain.Member;
+import org.sopt.member.dto.request.MemberCreateDto;
+import org.sopt.member.dto.response.MemberInfoDto;
 
 public interface MemberService {
-	void initData();
 
-	Long join(String name, String email, LocalDate birthday, Gender gender);
+	void join(MemberCreateDto memberCreateDto);
 
-	Optional<Member> findOne(Long memberId);
+	MemberInfoDto findOne(long memberId);
 
-	List<Member> findAllMembers();
+	List<MemberInfoDto> findAllMembers();
 
-	void deleteMemberById(Long id);
+	void deleteMemberById(long id);
 }
