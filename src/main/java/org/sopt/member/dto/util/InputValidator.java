@@ -4,8 +4,8 @@ import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 
 import org.sopt.member.domain.Gender;
-import org.sopt.global.exception.InvalidInputException;
-import org.sopt.global.exception.message.ExceptionMessage;
+import org.sopt.global.exception.external.InvalidInputException;
+import org.sopt.global.api.code.ErrorCode;
 
 public class InputValidator {
 	private static final String EMAIL_REGEX = "^[\\w._%+-]+@[\\w.-]+\\.[a-zA-Z]{2,6}$";
@@ -14,23 +14,23 @@ public class InputValidator {
 		try {
 			return Long.parseLong(idStr);
 		} catch (NumberFormatException e) {
-			throw new InvalidInputException(ExceptionMessage.INVALID_ID.getMessage());
+			throw new InvalidInputException(ErrorCode.INVALID_ID);
 		}
 	}
 
 	public static String validateName(String name) {
 		if (name == null || name.isBlank()) {
-			throw new InvalidInputException(ExceptionMessage.NAME_BLANKED.getMessage());
+			throw new InvalidInputException(ErrorCode.NAME_BLANKED);
 		}
 		return name;
 	}
 
 	public static String validateEmail(String email) {
 		if (email == null || email.isBlank()) {
-			throw new InvalidInputException(ExceptionMessage.EMAIL_BLANKED.getMessage());
+			throw new InvalidInputException(ErrorCode.EMAIL_BLANKED);
 		}
 		if (!email.matches(EMAIL_REGEX)) {
-			throw new InvalidInputException(ExceptionMessage.INVALID_EMAIL.getMessage());
+			throw new InvalidInputException(ErrorCode.INVALID_EMAIL);
 		}
 		return email;
 	}
@@ -39,7 +39,7 @@ public class InputValidator {
 		try {
 			return LocalDate.parse(birthStr);
 		} catch (DateTimeParseException e) {
-			throw new InvalidInputException(ExceptionMessage.INVALID_BIRTHDAY.getMessage());
+			throw new InvalidInputException(ErrorCode.INVALID_BIRTHDAY);
 		}
 	}
 
@@ -47,7 +47,7 @@ public class InputValidator {
 		try {
 			return Gender.of(genderStr);
 		} catch (NullPointerException e) {
-			throw new InvalidInputException(ExceptionMessage.INVALID_GENDER.getMessage());
+			throw new InvalidInputException(ErrorCode.INVALID_GENDER);
 		}
 	}
 }

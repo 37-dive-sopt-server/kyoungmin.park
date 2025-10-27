@@ -9,8 +9,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.sopt.member.domain.Member;
-import org.sopt.global.exception.FileIOException;
-import org.sopt.global.exception.message.ExceptionMessage;
+import org.sopt.global.exception.internal.FileIOException;
 import org.sopt.member.repository.util.FileIOManager;
 import org.springframework.stereotype.Repository;
 
@@ -24,7 +23,7 @@ public class FileMemberRepositoryImpl implements FileMemberRepository {
 			}
 			return (List<Member>) ois.readObject();
 		} catch (IOException | ClassNotFoundException e) {
-			throw new FileIOException(ExceptionMessage.FILE_NOT_READABLE.getMessage());
+			throw new FileIOException();
 		}
 	}
 
@@ -32,7 +31,7 @@ public class FileMemberRepositoryImpl implements FileMemberRepository {
 		try (ObjectOutputStream oos = FileIOManager.openObjectWriter()) {
 			oos.writeObject(members);
 		} catch (IOException e) {
-			throw new FileIOException(ExceptionMessage.FILE_NOT_WRITABLE.getMessage());
+			throw new FileIOException();
 		}
 	}
 
