@@ -4,10 +4,13 @@ import org.sopt.global.api.code.ErrorCode;
 import org.sopt.global.api.response.ApiResponse;
 import org.sopt.global.exception.BaseException;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.NoHandlerFoundException;
+
+import com.fasterxml.jackson.databind.exc.ValueInstantiationException;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler extends BaseExceptionHandler {
@@ -15,6 +18,16 @@ public class GlobalExceptionHandler extends BaseExceptionHandler {
 	@ExceptionHandler(BaseException.class)
 	protected ResponseEntity<ApiResponse<Void>> handleBaseException(BaseException e) {
 		return buildErrorResponse(e.getErrorCode());
+	}
+
+	@ExceptionHandler(HttpMessageNotReadableException.class)
+	protected ResponseEntity<ApiResponse<Void>> handleHttpMessageNotReadable(HttpMessageNotReadableException e) {
+		Throwable cause = e.getCause();
+		if (cause instanceof ValueInstantiationException vie && vie.getCause() instanceof BaseException be) {
+			return buildErrorResponse(be.getErrorCode());
+		}
+
+		return buildErrorResponse(ErrorCode.INVALID_REQUEST_MESSAGE);
 	}
 
 	@ExceptionHandler(MethodArgumentTypeMismatchException.class)
