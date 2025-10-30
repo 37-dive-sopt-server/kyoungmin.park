@@ -15,7 +15,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class FileIOManager {
 	private final Path filePath;
-	// = Paths.get("src/main/java/org/sopt/global/assets/member.txt");
 
 	public FileIOManager(@Value("${file.path}") String path) {
 		this.filePath = Paths.get(path);
