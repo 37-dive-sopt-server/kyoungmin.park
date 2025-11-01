@@ -1,0 +1,46 @@
+package org.sopt.member.domain;
+
+import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.Period;
+
+public class Member implements Serializable {
+
+	private Long id;
+	private String name;
+	private String email;
+	private LocalDate birthday;
+	private Gender gender;
+
+	public Member(Long id, String name, String email, LocalDate birthday, Gender gender) {
+		this.id = id;
+		this.name = name;
+		this.email = email;
+		this.birthday = birthday;
+		this.gender = gender;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public LocalDate getBirthday() {
+		return birthday;
+	}
+
+	public Gender getGender() {
+		return gender;
+	}
+
+	public int getAge(LocalDate now){
+		return Period.between(birthday, now).getYears();
+	}
+}
