@@ -2,6 +2,11 @@ package org.sopt.global.api.code;
 
 import org.springframework.http.HttpStatus;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+
+@Getter
+@RequiredArgsConstructor
 public enum ErrorCode {
 	// 400
 	AGE_UNDER_20(HttpStatus.BAD_REQUEST, "⚠️ 20세 미만은 가입할 수 없습니다."),
@@ -27,17 +32,4 @@ public enum ErrorCode {
 
 	private final HttpStatus httpStatus;
 	private final String message;
-
-	ErrorCode(HttpStatus httpStatus, String message) {
-		this.httpStatus = httpStatus;
-		this.message = message;
-	}
-
-	public HttpStatus getHttpStatus() {
-		return httpStatus;
-	}
-
-	public String getMessage() {
-		return message;
-	}
 }
