@@ -1,31 +1,33 @@
-package org.sopt.member.service;
+package org.sopt.domain.member.service;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.sopt.global.exception.external.NotFoundException;
-import org.sopt.member.domain.Member;
+import org.sopt.domain.member.entity.Member;
 import org.sopt.global.exception.business.EmailAlreadyExistException;
 import org.sopt.global.exception.business.InvalidAgeException;
 import org.sopt.global.api.code.ErrorCode;
-import org.sopt.member.dto.request.MemberCreateDto;
-import org.sopt.member.dto.response.MemberInfoDto;
-import org.sopt.member.repository.MemberRepository;
-import org.sopt.member.service.util.IdGenerator;
+import org.sopt.domain.member.dto.request.MemberCreateDto;
+import org.sopt.domain.member.dto.response.MemberInfoDto;
+import org.sopt.domain.member.repository.MemberRepository;
+import org.sopt.domain.member.service.util.IdGenerator;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import lombok.RequiredArgsConstructor;
 
 @Service
+@Transactional(readOnly = true)
+@RequiredArgsConstructor
 public class MemberServiceImpl implements MemberService {
 
 	private final MemberRepository memberRepository;
 
-	public MemberServiceImpl(MemberRepository memberRepository) {
-		this.memberRepository = memberRepository;
-	}
-
+	@Transactional
 	public void join(final MemberCreateDto memberCreateDto) {
-		Member member = memberCreateDto.toEntity(IdGenerator.generate());
+		Member member = memberCreateDto.toEntity();
 
 		if (member.getAge(LocalDate.now()) < 20) {
 			throw new InvalidAgeException();
@@ -50,6 +52,7 @@ public class MemberServiceImpl implements MemberService {
 				.collect(Collectors.toList());
 	}
 
+	@Transactional
 	public void deleteMemberById(final long id) {
 		memberRepository.deleteById(id);
 	}

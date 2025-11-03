@@ -1,10 +1,10 @@
-package org.sopt.member.controller;
+package org.sopt.domain.member.controller;
 
 import java.util.List;
 
 import org.sopt.global.api.response.ApiResponse;
-import org.sopt.member.dto.request.MemberCreateDto;
-import org.sopt.member.dto.response.MemberInfoDto;
+import org.sopt.domain.member.dto.request.MemberCreateDto;
+import org.sopt.domain.member.dto.response.MemberInfoDto;
 import org.springframework.http.ResponseEntity;
 
 import io.swagger.v3.oas.annotations.Operation;

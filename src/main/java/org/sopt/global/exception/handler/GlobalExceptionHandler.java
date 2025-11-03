@@ -22,11 +22,6 @@ public class GlobalExceptionHandler extends BaseExceptionHandler {
 
 	@ExceptionHandler(HttpMessageNotReadableException.class)
 	protected ResponseEntity<ApiResponse<Void>> handleHttpMessageNotReadable(HttpMessageNotReadableException e) {
-		Throwable cause = e.getCause();
-		if (cause instanceof ValueInstantiationException vie && vie.getCause() instanceof BaseException be) {
-			return buildErrorResponse(be.getErrorCode());
-		}
-
 		return buildErrorResponse(ErrorCode.INVALID_REQUEST_MESSAGE);
 	}
 

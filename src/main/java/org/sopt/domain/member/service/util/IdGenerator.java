@@ -1,4 +1,4 @@
-package org.sopt.member.service.util;
+package org.sopt.domain.member.service.util;
 
 import java.util.concurrent.atomic.AtomicLong;
 

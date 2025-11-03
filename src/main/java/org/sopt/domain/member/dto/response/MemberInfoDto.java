@@ -1,8 +1,8 @@
-package org.sopt.member.dto.response;
+package org.sopt.domain.member.dto.response;
 
 import java.time.LocalDate;
 
-import org.sopt.member.domain.Member;
+import org.sopt.domain.member.entity.Member;
 
 public record MemberInfoDto(
 		String name,

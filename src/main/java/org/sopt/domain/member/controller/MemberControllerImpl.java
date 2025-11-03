@@ -1,12 +1,12 @@
-package org.sopt.member.controller;
+package org.sopt.domain.member.controller;
 
 import java.util.List;
 
 import org.sopt.global.api.code.SuccessCode;
 import org.sopt.global.api.response.ApiResponse;
-import org.sopt.member.dto.request.MemberCreateDto;
-import org.sopt.member.dto.response.MemberInfoDto;
-import org.sopt.member.service.MemberService;
+import org.sopt.domain.member.dto.request.MemberCreateDto;
+import org.sopt.domain.member.dto.response.MemberInfoDto;
+import org.sopt.domain.member.service.MemberService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,18 +15,18 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+
 @RestController
+@RequiredArgsConstructor
 public class MemberControllerImpl implements MemberController {
 
 	private final MemberService memberService;
 
-	public MemberControllerImpl(MemberService memberService) {
-		this.memberService = memberService;
-	}
-
 	@PostMapping(path = "/members")
 	public ResponseEntity<ApiResponse<Void>> createMember(
-			@RequestBody final MemberCreateDto memberCreateDto
+			@RequestBody @Valid final MemberCreateDto memberCreateDto
 	) {
 		memberService.join(memberCreateDto);
 
