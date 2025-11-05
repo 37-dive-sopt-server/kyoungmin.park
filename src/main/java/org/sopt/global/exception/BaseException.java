@@ -1,16 +1,15 @@
 package org.sopt.global.exception;
 
-import org.sopt.global.api.code.ErrorCode;
+import org.sopt.global.api.code.ErrorResultCode;
 
+import lombok.Getter;
+
+@Getter
 public abstract class BaseException extends RuntimeException {
-	private final ErrorCode errorCode;
+	private final ErrorResultCode errorResultCode;
 
-	protected BaseException(ErrorCode errorCode) {
-		super(errorCode.getMessage());
-		this.errorCode = errorCode;
-	}
-
-	public ErrorCode getErrorCode() {
-		return errorCode;
+	protected BaseException(ErrorResultCode errorResultCode) {
+		super(errorResultCode.getMessage());
+		this.errorResultCode = errorResultCode;
 	}
 }
