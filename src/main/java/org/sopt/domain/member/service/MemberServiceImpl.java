@@ -4,15 +4,14 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.sopt.global.exception.external.NotFoundException;
+import org.sopt.global.exception.external.MemberNotFoundException;
 import org.sopt.domain.member.entity.Member;
 import org.sopt.global.exception.business.EmailAlreadyExistException;
 import org.sopt.global.exception.business.InvalidAgeException;
-import org.sopt.global.api.code.ErrorCode;
+import org.sopt.global.api.code.member.ErrorCode;
 import org.sopt.domain.member.dto.request.MemberCreateDto;
 import org.sopt.domain.member.dto.response.MemberInfoDto;
 import org.sopt.domain.member.repository.MemberRepository;
-import org.sopt.domain.member.service.util.IdGenerator;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -41,7 +40,7 @@ public class MemberServiceImpl implements MemberService {
 
 	public MemberInfoDto findOne(final long memberId) {
 		Member member =  memberRepository.findById(memberId)
-				.orElseThrow(() -> new NotFoundException(ErrorCode.MEMBER_NOTFOUND));
+				.orElseThrow(MemberNotFoundException::new);
 
 		return MemberInfoDto.from(member);
 	}
