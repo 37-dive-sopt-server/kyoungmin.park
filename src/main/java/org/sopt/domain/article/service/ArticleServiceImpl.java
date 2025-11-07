@@ -46,9 +46,6 @@ public class ArticleServiceImpl implements ArticleService {
 	}
 
 	public List<ArticleInfoDto> searchArticle(final String title, final String author) {
-
-		System.out.println(title);
-		System.out.println(author);
 		boolean hasTitle = title != null && !title.isBlank();
 		boolean hasAuthor = author != null && !author.isBlank();
 
