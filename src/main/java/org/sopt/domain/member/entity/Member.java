@@ -34,6 +34,9 @@ public class Member implements Serializable {
 	private String email;
 
 	@Column(nullable = false)
+	private String password;
+
+	@Column(nullable = false)
 	private LocalDate birthday;
 
 	@Enumerated(EnumType.STRING)
@@ -41,9 +44,10 @@ public class Member implements Serializable {
 	private Gender gender;
 
 	@Builder
-	public Member(String name, String email, LocalDate birthday, Gender gender) {
+	public Member(String name, String email, String password, LocalDate birthday, Gender gender) {
 		this.name = name;
 		this.email = email;
+		this.password = password;
 		this.birthday = birthday;
 		this.gender = gender;
 	}

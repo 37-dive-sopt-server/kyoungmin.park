@@ -16,16 +16,19 @@ public record MemberCreateDto(
 	String name,
 	@Email
 	String email,
+	@NotBlank
+	String password,
 	@NotNull
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	LocalDate birthday,
 	@NotNull
 	Gender gender
 ) {
-	public Member toEntity() {
+	public Member toEntity(String encryptedPassword) {
 		return Member.builder()
 				.name(name)
 				.email(email)
+				.password(encryptedPassword)
 				.birthday(birthday)
 				.gender(gender)
 				.build();
