@@ -17,7 +17,7 @@ public enum ErrorCode implements ErrorResultCode {
 	TOKEN_EXPIRED(HttpStatus.UNAUTHORIZED, "⚠️ 이미 만료된 토큰입니다."),
 
 	// 404
-	MEMBER_NOTFOUND(HttpStatus.NOT_FOUND, "⚠️ 해당 ID의 회원을 찾을 수 없습니다."),
+	MEMBER_NOTFOUND(HttpStatus.NOT_FOUND, "⚠️ 회원정보를 찾을 수 없습니다."),
 
 	// 409
 	ALREADY_EXIST_EMAIL(HttpStatus.CONFLICT, "⚠️ 이미 존재하는 이메일입니다.");
